@@ -153,8 +153,34 @@ end
 
 default_command :update
 
+program :summary, 'Stupid command that prints foo or bar.'
+program :description, %q(
+#{c.summary}
+...
+)
 
+program :help, 'Author', 'TJ Holowaychuk <tj@visoin-media.ca>'
 
+global_option('-c', '--conifg FILE', 'Load config data for your commands to user') { |file| ...}
+
+global_option('--verbose') { $verbose = true }
+c.action do |args, options|
+  say 'foo' if $verbose
+end
+
+global_option '--verbose'
+c.action do |args, options|
+  say 'foo' if options.verbose
+end
+
+program :help_formatter, Commander::HelpFormatter::TerminalCompact
+program :help_formatter, :compact
+
+never_trace!
+always_trace!
+
+global_option '-c', '--config FILE'
+global_option '--config FILE'
 
 ```
 
